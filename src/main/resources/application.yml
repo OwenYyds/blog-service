@@ -7,7 +7,7 @@ spring:
   application:
     name: owen-blog
   datasource:
-    url: jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=UTC  # 数据库 URL
+    url: jdbc:mysql://localhost:3306/blog-service?useSSL=false&serverTimezone=UTC  # 数据库 URL
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: qq145214  # 数据库密码
