@@ -1,0 +1,23 @@
+server:
+  port: 8088
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: owen-blog
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=UTC  # 数据库 URL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: qq145214  # 数据库密码
+    hikari:
+      pool-name: HikariPool  # 连接池名称
+      connection-timeout: 30000  # 连接池连接超时（毫秒）
+      maximum-pool-size: 3  # 最大连接数
+      minimum-idle: 2  # 最小空闲连接数
+      idle-timeout: 30000  # 空闲连接超时时间（毫秒）
+      max-lifetime: 600000  # 连接最大生命周期（毫秒）
+  main:
+    lazy-initialization: true  # 启用延迟初始化
+
