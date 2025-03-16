@@ -22,4 +22,7 @@ public interface UserMapper {
 
 	@Update("update user set user_name = #{userName}, email = #{email}, nick_name = #{nickName} where id = #{id}")
 	void update(User user);
+
+	@Update("update user set avatar = #{avatarUrl} where id = #{id}")
+	void updateAvatar(String avatarUrl, Integer id);
 }

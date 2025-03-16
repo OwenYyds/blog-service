@@ -13,4 +13,6 @@ public interface UserService {
 	List<User> findAll();
 
 	void update(User user);
+
+	void updateAvatar(String avatarUrl);
 }

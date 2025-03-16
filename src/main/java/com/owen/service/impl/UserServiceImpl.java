@@ -4,10 +4,12 @@ import com.owen.mapper.UserMapper;
 import com.owen.pojo.User;
 import com.owen.service.UserService;
 import com.owen.utills.PasswordEncodeUtil;
+import com.owen.utills.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,5 +36,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void update(User user) {
 		userMapper.update(user);
+	}
+
+	@Override
+	public void updateAvatar(String avatarUrl) {
+		Map<String, Object>  map = ThreadLocalUtil.get();
+		Integer id = (Integer) map.get("id");
+		userMapper.updateAvatar(avatarUrl  , id);
 	}
 }

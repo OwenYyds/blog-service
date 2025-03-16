@@ -7,6 +7,8 @@ import com.owen.utills.JwtUtil;
 import com.owen.utills.PasswordEncodeUtil;
 import com.owen.utills.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
+import lombok.val;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -83,5 +85,11 @@ public class UserController {
 	public ResponseMessage<User> update(@RequestBody User user) {
 		userService.update(user);
 		return ResponseMessage.success(user);
+	}
+
+	@PatchMapping("/updateavatar")
+	public ResponseMessage<String> updateAvatar(@RequestParam @URL String avatarUrl) {
+		userService.updateAvatar(avatarUrl);
+		return ResponseMessage.success();
 	}
 }
