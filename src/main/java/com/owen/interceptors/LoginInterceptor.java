@@ -1,6 +1,7 @@
 package com.owen.interceptors;
 
 import com.owen.utills.JwtUtil;
+import com.owen.utills.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -17,12 +18,17 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 		try {
 			Map<String, Object> claims = JwtUtil.verifyToken(token);
-
+			ThreadLocalUtil.set(claims);
 			return true;
 		} catch (Exception e) {
 			response.setStatus(401);
 			return false;
 		}
 
+	}
+
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		ThreadLocalUtil.remove();
 	}
 }

@@ -5,6 +5,7 @@ import com.owen.pojo.User;
 import com.owen.service.UserService;
 import com.owen.utills.JwtUtil;
 import com.owen.utills.PasswordEncodeUtil;
+import com.owen.utills.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -68,11 +69,10 @@ public class UserController {
 	}
 
 	@GetMapping("/info")
-	public ResponseMessage<User> getUserByJwt(@RequestHeader("Authorization") String token) {
-		Map<String, Object> claims = JwtUtil.verifyToken(token);
-		String username = claims.get("username").toString();
-		User user = userService.findByUserName(username);
+	public ResponseMessage<User> getUserByJwt() {
 
+		Map<String, Object> map = ThreadLocalUtil.get();
+		User user = userService.findByUserName(map.get("username").toString());
 
 		return ResponseMessage.success(user);
 	}
