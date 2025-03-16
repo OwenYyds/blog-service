@@ -1,5 +1,6 @@
 package com.owen.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class User {
 	private Integer id;
 	private String userName;
+	@JsonIgnore
 	private String password;
 	private String email;
 	private String phone;
