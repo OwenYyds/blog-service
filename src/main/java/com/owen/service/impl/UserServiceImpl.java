@@ -3,7 +3,7 @@ package com.owen.service.impl;
 import com.owen.mapper.UserMapper;
 import com.owen.pojo.User;
 import com.owen.service.UserService;
-import com.owen.utills.PasswordEncodeUtils;
+import com.owen.utills.PasswordEncodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void add(User user) {
-		user.setPassword(PasswordEncodeUtils.encodePassword(user.getPassword()));
+		user.setPassword(PasswordEncodeUtil.encodePassword(user.getPassword()));
         userMapper.add(user);
 	}
 
