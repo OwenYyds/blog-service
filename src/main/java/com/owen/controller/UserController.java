@@ -92,4 +92,25 @@ public class UserController {
 		userService.updateAvatar(avatarUrl);
 		return ResponseMessage.success();
 	}
+
+	@PatchMapping("/update-password")
+	public ResponseMessage<String> updatePassword(@RequestBody Map<String, String> passwordMap) {
+		String oldPassword = passwordMap.get("oldPassword");
+		String newPassword = passwordMap.get("newPassword");
+		String confirmPassword = passwordMap.get("confirmPassword");
+
+		Map<String, Object> map = ThreadLocalUtil.get();
+		User user = userService.findByUserName(map.get("username").toString());
+
+		if (!PasswordEncodeUtil.encodePassword(oldPassword).equals(user.getPassword())) {
+			return ResponseMessage.error(500, "Old password is incorrect");
+		}
+
+		if (!newPassword.equals(confirmPassword)) {
+			return ResponseMessage.error(500, "New password and confirm password are not the same");
+		}
+
+		userService.updatePassword(newPassword);
+		return ResponseMessage.success();
+	}
 }
