@@ -4,6 +4,7 @@ import com.owen.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface UserMapper {
 
 	@Select("select *  from user")
 	List<User> findAll();
+
+	@Update("update user set user_name = #{userName}, email = #{email}, nick_name = #{nickName} where id = #{id}")
+	void update(User user);
 }
