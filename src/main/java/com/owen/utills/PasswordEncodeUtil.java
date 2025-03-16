@@ -3,7 +3,7 @@ package com.owen.utills;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class PasswordEncodeUtils {
+public class PasswordEncodeUtil {
 
 	public static String encodePassword(String password) {
 		try {
