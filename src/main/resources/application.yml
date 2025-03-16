@@ -20,4 +20,6 @@ spring:
       max-lifetime: 600000  # 连接最大生命周期（毫秒）
   main:
     lazy-initialization: true  # 启用延迟初始化
-
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
