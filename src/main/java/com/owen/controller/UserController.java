@@ -8,10 +8,7 @@ import com.owen.utills.PasswordEncodeUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,5 +65,15 @@ public class UserController {
 			return ResponseMessage.success(newUser);
 		}
 
+	}
+
+	@GetMapping("/info")
+	public ResponseMessage<User> getUserByJwt(@RequestHeader("Authorization") String token) {
+		Map<String, Object> claims = JwtUtil.verifyToken(token);
+		String username = claims.get("username").toString();
+		User user = userService.findByUserName(username);
+
+
+		return ResponseMessage.success(user);
 	}
 }
