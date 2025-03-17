@@ -23,7 +23,7 @@ public class User {
 	private String email;
 	private String phone;
 	private String avatar;
-	private    createTime;
+	private String createTime;
 	private String updateTime;
 	private String lastLoginTime;
 	private Integer status;

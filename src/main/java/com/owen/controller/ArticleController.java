@@ -1,6 +1,7 @@
 package com.owen.controller;
 
 import com.owen.pojo.Article;
+import com.owen.pojo.PageBean;
 import com.owen.pojo.ResponseMessage;
 import com.owen.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ public class ArticleController {
 	@GetMapping("/{id}")
 	public ResponseMessage<Article> getById(@PathVariable Integer id) {
 		return ResponseMessage.success(articleService.getById(id));
+	}
+
+	@GetMapping("/list")
+	public ResponseMessage<PageBean<Article>> list(
+			Integer pageNum,
+			Integer pageSize,
+		    @RequestParam(required = false) String categoryId,
+			@RequestParam(required = false) String status
+	) {
+		PageBean<Article> pageList = articleService.list(pageNum, pageSize, categoryId, status);
+
+		return ResponseMessage.success(pageList   );
 	}
 
 	@GetMapping

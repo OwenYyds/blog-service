@@ -29,4 +29,5 @@ public interface ArticleMapper {
 	@Update("update article set deleted=1 where id=#{id}")
 	void delete(Integer id);
 
+	List<Article> list(String categoryId, String status);
 }

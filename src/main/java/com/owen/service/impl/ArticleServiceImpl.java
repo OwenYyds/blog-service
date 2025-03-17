@@ -1,7 +1,10 @@
 package com.owen.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.owen.mapper.ArticleMapper;
 import com.owen.pojo.Article;
+import com.owen.pojo.PageBean;
 import com.owen.service.ArticleService;
 import com.owen.utills.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +45,19 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Article getById(Integer id) {
 		return articleMapper.getById(id);
+	}
+
+	@Override
+	public PageBean<Article> list(Integer pageNum, Integer pageSize, String categoryId, String status) {
+		PageBean<Article> pageBean = new PageBean<>();
+		PageHelper.startPage(pageNum, pageSize);
+
+		List<Article> list = articleMapper.list(categoryId, status);
+		Page<Article> page = (Page<Article>) list;
+
+		pageBean.setTotal(page.getTotal());
+		pageBean.setItems(page.getResult());
+
+		return pageBean;
 	}
 }
