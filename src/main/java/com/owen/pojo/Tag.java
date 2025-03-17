@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class Tag {
 	private Integer id;
 	private String name;
-	private Timestamp createTime;
-	private Timestamp updateTime;
+	private String createTime;
+	private String updateTime;
 	private Integer deleted;
 }

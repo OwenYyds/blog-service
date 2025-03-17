@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +11,7 @@ import java.sql.Timestamp;
 public class Category {
     	private Integer id;
 		private String name;
-		private Timestamp createTime;
-		private Timestamp updateTime;
+		private String createTime;
+		private String updateTime;
 		private Integer deleted;
 }

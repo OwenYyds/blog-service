@@ -42,7 +42,7 @@ public class UserController {
 			if (user.getPassword().equals(PasswordEncodeUtil.encodePassword(password))) {
 				Map<String, Object> claims = new HashMap<>();
 				claims.put("id", user.getId());
-				claims.put("username", user.getUserName());
+				claims.put("use   rname", user.getUserName());
 				String token = JwtUtil.generateToken(claims);
 
 				return ResponseMessage.success(token);

@@ -1,10 +1,10 @@
 package com.owen.pojo;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +12,9 @@ import java.security.Timestamp;
 public class Article {
 	private Integer id;
 	private Integer userId;
+	@NotEmpty
 	private String title;
+	@NotEmpty
 	private String content;
 	private String summary;
 	private String coverImage;
@@ -21,7 +23,7 @@ public class Article {
 	private Integer viewCount;
 	private Integer likeCount;
 	private Integer commentCount;
-	private Timestamp createTime;
-	private Timestamp updateTime;
+	private String createTime;
+	private String updateTime;
 	private Integer deleted;
 }
