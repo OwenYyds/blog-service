@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Tag {
 	private Integer id;
 	private String name;

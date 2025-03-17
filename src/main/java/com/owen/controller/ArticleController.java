@@ -27,19 +27,19 @@ public class ArticleController {
 	}
 
 	@PostMapping("/add")
-	public ResponseMessage<Article> add(@RequestBody Article article) {
+	public ResponseMessage<Article> add(@RequestBody @Validated Article article) {
 		articleService.add(article);
 		return ResponseMessage.success(article);
 	}
 
 	@PutMapping("/update")
-	public ResponseMessage<Article> update(@RequestBody Article article) {
+	public ResponseMessage<Article> update(@RequestBody @Validated Article article) {
 		articleService.update(article);
 		return ResponseMessage.success(article);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseMessage<Article> delete(@PathVariable  Integer id) {
+	public ResponseMessage<Article> delete(@PathVariable Integer id) {
 		articleService.delete(id);
 		return ResponseMessage.success();
 	}

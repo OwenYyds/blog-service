@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Category {
     	private Integer id;
 		private String name;
