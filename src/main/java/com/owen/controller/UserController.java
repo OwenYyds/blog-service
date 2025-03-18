@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.val;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -25,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
 
 	@GetMapping
 	public ResponseMessage<List<User>> findAll() {
@@ -42,9 +47,10 @@ public class UserController {
 			if (user.getPassword().equals(PasswordEncodeUtil.encodePassword(password))) {
 				Map<String, Object> claims = new HashMap<>();
 				claims.put("id", user.getId());
-				claims.put("use   rname", user.getUserName());
+				claims.put("username", user.getUserName());
 				String token = JwtUtil.generateToken(claims);
-
+				// save token to redis
+				 stringRedisTemplate.opsForValue().set(token, token, JwtUtil.EXPIRATION_TIME, TimeUnit.MILLISECONDS);
 				return ResponseMessage.success(token);
 			}else {
 				return ResponseMessage.error(500,"username or password is incorrect");
@@ -94,7 +100,7 @@ public class UserController {
 	}
 
 	@PatchMapping("/update-password")
-	public ResponseMessage<String> updatePassword(@RequestBody Map<String, String> passwordMap) {
+	public ResponseMessage<String> updatePassword(@RequestBody Map<String, String> passwordMap, @RequestHeader("Authorization") String token) {
 		String oldPassword = passwordMap.get("oldPassword");
 		String newPassword = passwordMap.get("newPassword");
 		String confirmPassword = passwordMap.get("confirmPassword");
@@ -111,6 +117,10 @@ public class UserController {
 		}
 
 		userService.updatePassword(newPassword);
+
+		// delete token
+		stringRedisTemplate.opsForValue().getOperations().delete(token);
+
 		return ResponseMessage.success();
 	}
 }
