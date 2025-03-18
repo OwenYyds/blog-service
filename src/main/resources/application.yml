@@ -38,5 +38,5 @@ digital-ocean:
   region: sgp1
   access-key: ${DIGITAL_OCEAN_ACCESS_KEY}
   secret-key: ${DIGITAL_OCEAN_SECRET_KEY}
-  endpoint: https://\${digital-ocean.region}.digitaloceanspaces.com
-  cnd-endpoint: https://blog-content-service.${digital-ocean.region}.cdn.digitaloceanspaces.com/
+  endpoint: https://sgp1.digitaloceanspaces.com
+  cdn-endpoint: https://blog-content-service.sgp1.cdn.digitaloceanspaces.com/
