@@ -14,6 +14,9 @@ import java.util.Map;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 	@Autowired
+	private JwtUtil jwtUtil;
+
+	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
 	@Override
@@ -21,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String token = request.getHeader("Authorization");
 
 		try {
-			Map<String, Object> claims = JwtUtil.verifyToken(token);
+			Map<String, Object> claims = jwtUtil.verifyToken(token);
 			ThreadLocalUtil.set(claims);
 
 			String redisToken = stringRedisTemplate.opsForValue().get(token);

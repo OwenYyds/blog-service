@@ -29,6 +29,9 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
+	private JwtUtil jwtUtil;
+
+	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 
 	@GetMapping
@@ -48,9 +51,9 @@ public class UserController {
 				Map<String, Object> claims = new HashMap<>();
 				claims.put("id", user.getId());
 				claims.put("username", user.getUserName());
-				String token = JwtUtil.generateToken(claims);
+				String token = jwtUtil.generateToken(claims);
 				// save token to redis
-				 stringRedisTemplate.opsForValue().set(token, token, JwtUtil.EXPIRATION_TIME, TimeUnit.MILLISECONDS);
+				 stringRedisTemplate.opsForValue().set(token, token, 1000*60*60*12, TimeUnit.MILLISECONDS);
 				return ResponseMessage.success(token);
 			}else {
 				return ResponseMessage.error(500,"username or password is incorrect");
