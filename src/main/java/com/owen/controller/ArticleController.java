@@ -24,14 +24,11 @@ public class ArticleController {
 
 	@GetMapping("/list")
 	public ResponseMessage<PageBean<Article>> list(
-			Integer pageNum,
-			Integer pageSize,
-		    @RequestParam(required = false) String categoryId,
-			@RequestParam(required = false) String status
-	) {
+			Integer pageNum, Integer pageSize, @RequestParam(required = false) String categoryId,
+			@RequestParam(required = false) String status) {
 		PageBean<Article> pageList = articleService.list(pageNum, pageSize, categoryId, status);
 
-		return ResponseMessage.success(pageList   );
+		return ResponseMessage.success(pageList);
 	}
 
 	@GetMapping
