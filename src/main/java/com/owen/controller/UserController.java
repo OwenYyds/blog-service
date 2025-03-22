@@ -3,6 +3,7 @@ package com.owen.controller;
 import com.owen.pojo.ResponseMessage;
 import com.owen.pojo.User;
 import com.owen.service.UserService;
+import com.owen.service.data.RedisService;
 import com.owen.utills.JwtUtil;
 import com.owen.utills.PasswordEncodeUtil;
 import com.owen.utills.ThreadLocalUtil;
@@ -32,7 +33,7 @@ public class UserController {
 	private JwtUtil jwtUtil;
 
 	@Autowired
-	private StringRedisTemplate stringRedisTemplate;
+	private RedisService redisService;
 
 	@GetMapping
 	public ResponseMessage<List<User>> findAll() {
@@ -53,7 +54,7 @@ public class UserController {
 				claims.put("username", user.getUserName());
 				String token = jwtUtil.generateToken(claims);
 				// save token to redis
-				 stringRedisTemplate.opsForValue().set(token, token, 1000*60*60*12, TimeUnit.MILLISECONDS);
+				redisService.saveData(token, token);
 				return ResponseMessage.success(token);
 			}else {
 				return ResponseMessage.error(500,"username or password is incorrect");
@@ -122,7 +123,7 @@ public class UserController {
 		userService.updatePassword(newPassword);
 
 		// delete token
-		stringRedisTemplate.opsForValue().getOperations().delete(token);
+		redisService.deleteData(token);
 
 		return ResponseMessage.success();
 	}

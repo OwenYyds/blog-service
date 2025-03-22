@@ -1,11 +1,11 @@
 package com.owen.interceptors;
 
+import com.owen.service.data.RedisService;
 import com.owen.utills.JwtUtil;
 import com.owen.utills.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,7 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	private JwtUtil jwtUtil;
 
 	@Autowired
-	private StringRedisTemplate stringRedisTemplate;
+	private RedisService redisService;
 
 	@Override
 	public boolean preHandle (HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -27,7 +27,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			Map<String, Object> claims = jwtUtil.verifyToken(token);
 			ThreadLocalUtil.set(claims);
 
-			String redisToken = stringRedisTemplate.opsForValue().get(token);
+			String redisToken = (String) redisService.getData(token);
 			if (redisToken == null) {
 				throw new RuntimeException();
 			}
