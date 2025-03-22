@@ -8,18 +8,14 @@ import com.owen.utills.JwtUtil;
 import com.owen.utills.PasswordEncodeUtil;
 import com.owen.utills.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
-import lombok.val;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
