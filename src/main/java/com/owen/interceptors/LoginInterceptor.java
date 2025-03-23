@@ -20,10 +20,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 	private RedisService redisService;
 
 	@Override
-	public boolean preHandle (HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(
+			HttpServletRequest request, HttpServletResponse response,
+			Object handler) throws Exception {
 		String token = request.getHeader("Authorization");
 
 		try {
+			if (token.startsWith("Bearer ")) {
+				token = token.substring(7);
+			}
+
 			Map<String, Object> claims = jwtUtil.verifyToken(token);
 			ThreadLocalUtil.set(claims);
 
@@ -41,7 +47,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+	public void afterCompletion(
+			HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception ex) throws Exception {
 		ThreadLocalUtil.remove();
 	}
 }
